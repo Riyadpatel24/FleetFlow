@@ -639,7 +639,7 @@ tbody tr:hover td { background: rgba(255,255,255,0.025); color: var(--text1); }
 </head>
 <body>
 
-  <div class="hamburger" id="hamburger" onclick="toggleSidebar()">☰</div>
+  <button class="hamburger" id="hamburger" onclick="toggleSidebar()" style="border:none;cursor:pointer;">☰</button>
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
 
 <!-- ══════════════ SIDEBAR ══════════════ -->
@@ -2539,8 +2539,16 @@ function toggleTheme(el) {
 initTheme();
 
 function toggleSidebar() {
-  document.querySelector('.sidebar').classList.toggle('mobile-open');
-  document.getElementById('sidebarOverlay').classList.toggle('open');
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const isOpen = sidebar.classList.contains('mobile-open');
+  if (isOpen) {
+    sidebar.classList.remove('mobile-open');
+    overlay.classList.remove('open');
+  } else {
+    sidebar.classList.add('mobile-open');
+    overlay.classList.add('open');
+  }
 }
 function closeSidebar() {
   document.querySelector('.sidebar').classList.remove('mobile-open');
