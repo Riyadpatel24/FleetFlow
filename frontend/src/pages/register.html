@@ -440,27 +440,32 @@
   /* ── Google Sign-In (mock — replace with real OAuth when backend ready) ── */
   function googleSignIn() {
     if (typeof google === 'undefined') {
-      alert('Google Sign-In is loading, please try again in a second.');
+      alert('Google is still loading, please try again.');
       return;
     }
-    google.accounts.id.initialize({
+    const client = google.accounts.oauth2.initTokenClient({
       client_id: '698330898668-maodk0mn5106b8p8ppenvn85ri35narb.apps.googleusercontent.com',
-      callback: handleGoogleResponse
+      scope: 'email profile',
+      prompt: 'select_account',
+      callback: function(tokenResponse) {
+        fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: 'Bearer ' + tokenResponse.access_token }
+        })
+        .then(r => r.json())
+        .then(function(profile) {
+          const googleUser = {
+            firstName: profile.given_name,
+            lastName: profile.family_name,
+            email: profile.email,
+            provider: 'google',
+            avatar: profile.picture
+          };
+          localStorage.setItem('ff_user', JSON.stringify(googleUser));
+          window.location.href = 'full.html';
+        });
+      }
     });
-    google.accounts.id.prompt();
-  }
-
-  function handleGoogleResponse(response) {
-    const payload = JSON.parse(atob(response.credential.split('.')[1]));
-    const googleUser = {
-      firstName: payload.given_name,
-      lastName: payload.family_name,
-      email: payload.email,
-      provider: 'google',
-      avatar: payload.picture
-    };
-    localStorage.setItem('ff_user', JSON.stringify(googleUser));
-    window.location.href = 'full.html';
+    client.requestAccessToken();
   }
 
   function showSuccess() {
