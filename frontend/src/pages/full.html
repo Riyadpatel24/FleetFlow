@@ -68,6 +68,7 @@ body::before {
   backdrop-filter: blur(20px);
   z-index: 40;
   animation: slideInLeft 0.45s ease both;
+  transition: transform 0.3s ease; 
 }
 @keyframes slideInLeft {
   from { transform: translateX(-100%); opacity: 0; }
@@ -610,6 +611,7 @@ tbody tr:hover td { background: rgba(255,255,255,0.025); color: var(--text1); }
   background: rgba(0,0,0,0.6); z-index: 39;
 }
 @media (max-width: 768px) {
+  #sidebarClose { display: flex !important; align-items:center; justify-content:center; }
   .hamburger { display: flex; }
   .sidebar {
     transform: translateX(-100%);
@@ -644,6 +646,7 @@ tbody tr:hover td { background: rgba(255,255,255,0.025); color: var(--text1); }
 
 <!-- ══════════════ SIDEBAR ══════════════ -->
 <aside class="sidebar">
+   <button onclick="closeSidebar()" id="sidebarClose" style="display:none;position:absolute;top:16px;right:12px;background:rgba(255,255,255,0.1);border:none;color:#94a3b8;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;">✕</button>
   <div class="logo">⬡ <span class="logo-dot">FleetFlow</span></div>
 
   <div class="nav-section-label">Main</div>
