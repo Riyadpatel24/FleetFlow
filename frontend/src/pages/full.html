@@ -617,10 +617,10 @@ tbody tr:hover td { background: rgba(255,255,255,0.025); color: var(--text1); }
     transform: translateX(-100%) !important;
     animation: none !important;
     transition: transform 0.3s ease !important;
-    z-index: 50;
+    z-index: 50 !important;
     width: 230px !important;
   }
-  .sidebar.mobile-open { transform: translateX(0); }
+  .sidebar.mobile-open { transform: translateX(0) !important; }
   .sidebar-overlay.open { display: block; }
   .main { margin-left: 0 !important; padding: 16px; }
   .stats-grid { grid-template-columns: 1fr 1fr !important; gap: 10px; }
